@@ -1,5 +1,6 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { dummyUserChats, dummyUserData } from '../assets/assets'
 
 
 const AppContext = createContext()
@@ -8,35 +9,56 @@ export const AppContextProvider = ( {children} ) => {
 
     const navigate = useNavigate()
     const [user, setUser] = useState(null);
-    const [chat, setChat] = useState([]);
+    const [chats, setChats] = useState([]);
     const [selectedChat, setSelectedChat] = useState(null);
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
     const fetchUser = async () => {
-        try {
-            const response = await fetch('/api/user', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include',
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setUser(data.user);
-            } else {
-                setUser(null);
-            }       
-        } catch (error) {
-            console.error('Error fetching user:', error);
-            setUser(null);
-        }
+       setUser(dummyUserData);
     };
 
-    const value = {}
+    const fetchUserChats = async () => {
+        setChats(dummyUserChats);
+        setSelectedChat(dummyUserChats[0]);
+    }
+
+    useEffect(() => {
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        // localStorage.setItem('theme', theme);
+    }, [theme]);
+
+    useEffect(() => {
+        if (user) {
+            fetchUserChats();
+        }else {
+            setChats([]);
+            setSelectedChat(null);
+        }
+    }, [user]);
+
+    useEffect(() => {
+        fetchUser();
+    }, []);
+
+    const value = {
+        navigate,
+        user,
+        setUser,
+        chats,
+        setChats,
+        selectedChat,
+        setSelectedChat,
+        theme,
+        setTheme,
+        fetchUser
+    }
 
     return (
-        <AppContext.Provider value={{}}>
+        <AppContext.Provider value={value}>
             {children}
         </AppContext.Provider>
     )
