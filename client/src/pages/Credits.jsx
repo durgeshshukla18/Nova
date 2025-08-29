@@ -1,7 +1,7 @@
 
 
 
-function Credit() {
+function Credits() {
   return (
     <div>
         <h1>Credit Page</h1>
@@ -9,4 +9,4 @@ function Credit() {
   )
 }
 
-export default Credit
+export default Credits
