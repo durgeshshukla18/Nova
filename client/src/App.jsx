@@ -6,7 +6,9 @@ function App() {
 
   return (
     <>
-      <h1>QuickGPT</h1>
+      <div>
+        
+      </div>
     </>
   )
 }
