@@ -7,10 +7,16 @@ import Credits from "./pages/Credits";
 import Community from "./pages/Community";
 
 function App() {
+
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <>
+    {/* {isMenuOpen && <img src="./images/logout.png" className="absolute top-5 right-5 w-8 h-8 cursor-pointer invert dark:invert-0" onClick={() => setIsMenuOpen(true)} />} */}
+      
       <div className="dark:bg-gradient-to-b from-[#242124] to-[#000000] dark:text-white">
         <div className="flex h-screen w-screen">
+          {/* <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} /> */}
           <Sidebar />
           <Routes>
             <Route path="/" element={<Chatbox />} />

@@ -1,4 +1,6 @@
 
+export const BinIcon = 'BinIcon.svg';
+export const user_icon = 'user_icon.svg';
 
 
 export const dummyUserData = {
