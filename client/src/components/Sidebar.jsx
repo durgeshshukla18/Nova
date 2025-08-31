@@ -7,11 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 
 function Sidebar({}) {
-  const { chats, setSelectedChats, theme, setTheme, user } = useAppContext();
+  const { chats, setSelectedChat, theme, setTheme, user } = useAppContext();
 
   const [search, setSearch] = useState("");
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <div className="sidebar flex flex-col items-center bg-gradient-200 dark:bg-gradient-to-b from-[#3a383e] to-[#1f1e21] text-black dark:text-white border-r border-gray-300 dark:border-gray-700 backdrop-blur-3xl tansition-all duration-300 p-4 w-1/4">
@@ -48,7 +48,9 @@ function Sidebar({}) {
           .map((chat) => (
             <div
               key={chat.id}
+              // onClick={() => setSelectedChat(chat)} 
               className="group relative p-2 bg-gray-300 dark:bg-gray-800 rounded cursor-pointer hover:bg-gray-400 dark:hover:bg-gray-700 transition-all duration-300"
+              onClick={() => setSelectedChat(chat)}
             >
               <div>
                 <p className="font-bold truncate w-full">
@@ -67,6 +69,11 @@ function Sidebar({}) {
                 className="hidden group-hover:block absolute right-2 top-2 w-4 cursor-pointer invert dark:invert-0"
                 src={BinIcon}
                 alt="delete"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    // call your delete function here
+                    console.log("Delete chat with id:", chat.id);
+                }}
               />
               {/* <BinIcon className='hidden group-hover:block absolute right-2 top-2 w-4 cursor-pointer invert dark:invert-0' />  */}
             </div>
