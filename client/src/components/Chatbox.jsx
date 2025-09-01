@@ -34,13 +34,26 @@ function Chatbox() {
       {messages.map((message, index) => (
         <Message key={index} message={message} />
       ))}
+
+      {/* three dots loading  */}
+      {loading && (
+        <div className="loader flex items.center gap-1.5">
+          <div className="w-1.5 h-1.5 rounded-full bg-gray-500 dark:bg-white animate-bounce"></div>
+          <div className="w-1.5 h-1.5 rounded-full bg-gray-500 dark:bg-white animate-bounce"></div>
+          <div className="w-1.5 h-1.5 rounded-full bg-gray-500 dark:bg-white animate-bounce"></div>
+        </div>
+      )}
        
       </div>
 
       {/* input box  */}
-      <div>
+      <form>
+        <select className="text-sm pl-3 pr-2" name="" id="">
+          <option className="dark:bg-purple-900" value="text">Text</option>
+          <option className="dark:bg-purple-900" value="image">Image</option>
+        </select>
 
-      </div>
+      </form>
 
     </div>
   );
