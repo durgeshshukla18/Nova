@@ -6,8 +6,12 @@ import Chatbox from "./components/Chatbox";
 import Credits from "./pages/Credits";
 import Community from "./pages/Community";
 import Loading from "./pages/Loading";
+import { useAppContext } from "./context/AppContext";
+import Login from "./pages/Login";
 
 function App() {
+
+  const {user} = useAppContext();
 
   // const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -20,9 +24,11 @@ function App() {
 
   return (
     <>
-    {/* {isMenuOpen && <img src="./images/logout.png" className="absolute top-5 right-5 w-8 h-8 cursor-pointer invert dark:invert-0" onClick={() => setIsMenuOpen(true)} />} */}
+    {/* {isMenuOpen && <img src="./images/delete.png" className="absolute top-5 right-5 w-8 h-8 cursor-pointer invert dark:invert-0" onClick={() => setIsMenuOpen(true)} />} */}
       
-      <div className="dark:bg-gradient-to-b from-[#242124] to-[#000000] dark:text-white">
+
+      {user ? (
+        <div className="dark:bg-gradient-to-b from-[#242124] to-[#000000] dark:text-white">
         <div className="flex h-screen w-screen">
           {/* <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} /> */}
           <Sidebar />
@@ -33,6 +39,12 @@ function App() {
           </Routes>
         </div>
       </div>
+      ) : (
+        <div className="flex items-center justify-center h-screen w-screen bg-gradient-to-b from-[#242124] to-[#000000] text-white">
+          <Login />
+        </div>
+      )}
+      
     </>
   );
 }
