@@ -1,5 +1,6 @@
-import User from "../models/userModel.js";
+import User from "../models/user.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 
 // Generate JWT
@@ -26,7 +27,7 @@ export const registerUser = async(req, res) => {
 
         const token = generateToken(user._id);
         res.json({success: true, token});
-        // await user.save();
+        await user.save();
         // res.status(201).json({ message: "User registered successfully" });
     } catch (error) {
         res.status(500).json({ message: "Server error" });

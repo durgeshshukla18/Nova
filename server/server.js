@@ -3,6 +3,9 @@ import cors from 'cors';
 // import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import connectDB from './configs/db.js';
+import userRouter from './routes/userRoutes.js';
+dotenv.config();
+
 
 const app = express();
 
@@ -16,6 +19,9 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Hello from the server!');
 });
+
+// User routes
+app.use('/api/user', userRouter);
 
 const PORT = process.env.PORT || 5000;
 
