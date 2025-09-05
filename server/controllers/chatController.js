@@ -1,16 +1,16 @@
-import Chat from '../models/Chat.js';
+import Chat from "../models/chat.js";
 
 
 // API controller for chat application
 
 export const createChat = async(req, res) => {
-    const { userId, userName, name } = req.body;
+    // const { userId, userName, name } = req.body;
     try {
         const userId = req.user._id;
         const chatData = { 
             userId, 
             userName: req.user.name, 
-            name: name || "New Chat", 
+            name: req.body.name || "New Chat", 
             messages: [] };
         await Chat.create(chatData);
         res.status(201).json({ success: true, message: "Chat created successfully" });
