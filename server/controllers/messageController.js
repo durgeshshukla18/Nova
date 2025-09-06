@@ -82,7 +82,7 @@ export const imageMessageController = async(req, res) => {
         const reply = {role: 'assistant',content: uploadResponse.url, timestamp: Date.now(), isImage: true, isPublished};
         res.json({success: true, reply});
 
-        chat.messages,push(reply);
+        chat.messages.push(reply);
         await chat.save();
 
         // Credit Updatation
