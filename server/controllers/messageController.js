@@ -1,5 +1,7 @@
+import imagekit from "../configs/imageKit";
 import Chat from "../models/chat";
 import User from "../models/user";
+import axios from "axois";
 
 
 
@@ -53,7 +55,31 @@ export const imageMessageController = async(req, res) => {
 
         // Push user message
         chat.messages.push({role: "User", content: prompt, timetamp: Date.now(), isImage: false })
+
+        // Encode the prompt
+        const encodedPrompt = encodeURIComponent(prompt);
+
+        // Construct ImageKit AI generatio URL
+        const generatedImageUrl = `${process.env.IMAGEKIT_URL_ENDPOINT}/ik-generating-prompt-${encodedPrompt}/durgesh/${Date.now()}.png>tr=w-800,h-800`;
+
+        // Trigger generation by fetching from ImageKit
+        const aiImageResponse = await axios.get(generatedImageUrl, {responseType: "arraybuffet"});
+
+        // Convert to base-64
+        const base64Image = `data:image/png;base64.${Buffer.from(aiImageResponse.data,"binary").toString('base64')}`;
+
+        // Upload to Imagelit Media Library
+        const uploadResponse = await imagekit.upload({file: base64Image, filename: `${Date.now()}.png`, folder: "durgesh"});
+
+        const reply = {role: 'assistant',content: uploadResponse.url, timestamp: Date.now(), isImage: true, isPublished};
+        res.json({success: true, reply});
+
+        chat.messages,push(reply);
+        await chat.save();
+
+        // Credit Updatation
+        await User.updateOne({_id: userId}, {$inc: {credits: -2}})
     } catch (error) {
-         res.json({success: false, message: error,message});
+        res.json({success: false, message: error,message});
     }
 }
