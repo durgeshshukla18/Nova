@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import { useAppContext } from '../context/AppContext';
 
 
 function Login() {
@@ -8,10 +9,11 @@ function Login() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { axios, setToken } = useAppContext();
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-            // handle login or register logic here
+        
     }
 
 

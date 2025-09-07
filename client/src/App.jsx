@@ -8,22 +8,24 @@ import Community from "./pages/Community";
 import Loading from "./pages/Loading";
 import { useAppContext } from "./context/AppContext";
 import Login from "./pages/Login";
+import {Toaster} from 'react-hot-toast';
 
 function App() {
 
-  const {user} = useAppContext();
+  const {user, loadingUser} = useAppContext();
 
   // const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { pathname} = useLocation();
 
-  if(pathname === "/loading") {
+  if(pathname === "/loading" || loadingUser) {
     return <Loading />;
   }
 
 
   return (
     <>
+    <Toaster />
     {/* {isMenuOpen && <img src="./images/delete.png" className="absolute top-5 right-5 w-8 h-8 cursor-pointer invert dark:invert-0" onClick={() => setIsMenuOpen(true)} />} */}
       
 
