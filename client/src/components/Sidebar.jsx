@@ -158,9 +158,7 @@ function Sidebar({}) {
             className="w-5 h-5 cursor-pointer invert dark:invert-0"
             src="./images/logoutIcon.png"
             alt="logout"
-            onClick={() => {
-              logout
-            }}
+            onClick={logout}
           />
         )}
       </div>
