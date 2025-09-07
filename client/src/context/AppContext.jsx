@@ -35,10 +35,12 @@ export const AppContextProvider = ( {children} ) => {
     };
 
     const createNewChat = async() => {
+        // console.log("Token being sent:", token);
+
         try {
             if(!user) return toast('Loging to create a new Chat');
             navigate('/');
-            await axios.get('/api/chat/create', {headers: {Authorization: token}});
+            await axios.post('/api/chat/create', {headers: {Authorization: token}});
             await fetchUserChats();
         } catch (error) {
             toast.error(error.message);

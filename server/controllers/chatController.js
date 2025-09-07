@@ -7,10 +7,11 @@ export const createChat = async(req, res) => {
     // const { userId, userName, name } = req.body;
     try {
         const userId = req.user._id;
+        const { name } = req.body;
         const chatData = { 
             userId, 
             userName: req.user.name, 
-            name: req.body.name || "New Chat", 
+            name: name || "New Chat", 
             messages: [] };
         await Chat.create(chatData);
         res.status(201).json({ success: true, message: "Chat created successfully" });
