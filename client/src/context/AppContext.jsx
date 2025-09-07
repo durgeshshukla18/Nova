@@ -40,7 +40,7 @@ export const AppContextProvider = ( {children} ) => {
         try {
             if(!user) return toast('Loging to create a new Chat');
             navigate('/');
-            await axios.post('/api/chat/create', {headers: {Authorization: token}});
+            await axios.post('/api/chat/create',{}, {headers: {Authorization: token}});
             await fetchUserChats();
         } catch (error) {
             toast.error(error.message);

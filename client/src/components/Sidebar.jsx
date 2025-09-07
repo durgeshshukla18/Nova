@@ -4,12 +4,35 @@ import moment from "moment/moment";
 import {BinIcon} from '../assets/assets';
 // import { assets } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 function Sidebar({}) {
-  const { chats, setSelectedChat, theme, setTheme, user } = useAppContext();
+  const { chats, setSelectedChat, theme, setTheme, user, createNewChat, axios, setChats, fetchUserChats, token, setToken} = useAppContext();
 
   const [search, setSearch] = useState("");
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    setToken(null);
+    toast.success("Logged out successfully");
+  }
+
+  const deleteChat = async (e, chatId) => {
+    try {
+      e.stopPropagation();
+      const confirm = window.confirm("Are you sure! you want to delete this chat?");
+      if(!confirm) return 
+      const { data } = await axios.post('/api/chat/delete', {chatId}, {headers: {Authorization: token }});
+      if(data.success){
+        setChats(prev => prev.filter(chat => chat._id !== chatId));
+        await fetchUserChats();
+        toast.success(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
 
   const navigate = useNavigate();
 
@@ -21,7 +44,7 @@ function Sidebar({}) {
       </div>
 
       {/* newChat button  */}
-      <button className="flex items-center justify-center w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 text-white font-bold py-2 px-4 rounded-lg mb-4 transition-all duration-300 shadow-md">
+      <button onClick={createNewChat} className="flex items-center justify-center w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 text-white font-bold py-2 px-4 rounded-lg mb-4 transition-all duration-300 shadow-md">
         <span className="mr-2 text-xl">+</span>New Chat
       </button>
 
@@ -72,9 +95,7 @@ function Sidebar({}) {
                 src="/images/deleteIcon.png"
                 alt="delete"
                 onClick={(e) => {
-                  e.stopPropagation();
-                  console.log("Delete chat with id:", chat._id);
-                  // TODO: call your delete API here
+                  toast.promise(deleteChat(e, chat._id), {loading: 'deleting...'})
                 }}
               />
               {/* <img
@@ -122,31 +143,27 @@ function Sidebar({}) {
 
 
       {/* user account  */}
-        {/* user account  */}
-<div className="flex items-center justify-between gap-3 p-3 mt-4 border-t border-gray-300 dark:border-gray-700 w-full">
-  <div className="flex items-center gap-3">
-    <img className="w-10 h-10 rounded-full" src="./images/user.png" alt="user" />
-    <div className="flex flex-col">
-      <p className="font-bold text-sm">{user ? user.name : 'Guest'}</p>
-      <p className="text-xs text-gray-500 dark:text-gray-400">{user ? user.email : 'Not logged in'}</p>
-    </div>
-  </div>
+      <div className="flex items-center justify-between gap-3 p-3 mt-4 border-t border-gray-300 dark:border-gray-700 w-full">
+        <div className="flex items-center gap-3">
+          <img className="w-10 h-10 rounded-full" src="./images/user.png" alt="user" />
+          <div className="flex flex-col">
+            <p className="font-bold text-sm">{user ? user.name : 'Guest'}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{user ? user.email : 'Not logged in'}</p>
+          </div>
+        </div>
 
-  {/* Logout Icon */}
-  {user && (
-    <img
-      className="w-5 h-5 cursor-pointer invert dark:invert-0"
-      src="./images/logoutIcon.png"
-      alt="logout"
-      onClick={() => {
-        localStorage.removeItem("token");
-        setUser(null);
-        setToken(null);
-        navigate("/login"); // redirect to login page
-      }}
-    />
-  )}
-</div>
+        {/* Logout Icon */}
+        {user && (
+          <img
+            className="w-5 h-5 cursor-pointer invert dark:invert-0"
+            src="./images/logoutIcon.png"
+            alt="logout"
+            onClick={() => {
+              logout
+            }}
+          />
+        )}
+      </div>
 
 
 
