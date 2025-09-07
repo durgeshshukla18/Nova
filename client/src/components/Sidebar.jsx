@@ -68,15 +68,25 @@ function Sidebar({}) {
               {/* > */}
               {/* {chat.messages[0] ? chat.messages[0]?.content.slice(0, 20) + (chat.messages[0]?.content.length > 20 ? '...' : '') : 'New Chat'} */}
               <img
+                className="hidden group-hover:block absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 cursor-pointer opacity-70 hover:opacity-100 transition"
+                src="/images/deleteIcon.png"
+                alt="delete"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  console.log("Delete chat with id:", chat._id);
+                  // TODO: call your delete API here
+                }}
+              />
+              {/* <img
                 className="hidden group-hover:block absolute right-3 top-3 w-4 cursor-pointer invert dark:invert-0"
-                src={BinIcon}
+                src='./images/deleteIcong.png'
                 alt="delete"
                 onClick={(e) => {
                     e.stopPropagation();
                     // call your delete function here
                     console.log("Delete chat with id:", chat.id);
                 }}
-              />
+              /> */}
               {/* <BinIcon className='hidden group-hover:block absolute right-2 top-2 w-4 cursor-pointer invert dark:invert-0' />  */}
             </div>
           ))}
@@ -112,16 +122,32 @@ function Sidebar({}) {
 
 
       {/* user account  */}
-        <div className="flex items-center gap-3 p-3 mt-4 border-t border-gray-300 dark:border-gray-700 w-full">
-            <img className="w-10 h-10 rounded-full" src="./images/user.png" alt="user" />
-            <div className="flex flex-col">
-                <p className="font-bold text-sm">{user ? user.name : 'Guest'}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">{user ? user.email : 'Not logged in'}</p>
-                {/* {user && <img className="w-4 h-4 mt-1 cursor-pointer invert dark:invert-0" src='../images/logout.png' alt="" />} */}
-            </div>
+        {/* user account  */}
+<div className="flex items-center justify-between gap-3 p-3 mt-4 border-t border-gray-300 dark:border-gray-700 w-full">
+  <div className="flex items-center gap-3">
+    <img className="w-10 h-10 rounded-full" src="./images/user.png" alt="user" />
+    <div className="flex flex-col">
+      <p className="font-bold text-sm">{user ? user.name : 'Guest'}</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400">{user ? user.email : 'Not logged in'}</p>
+    </div>
+  </div>
 
-            <img className="absolute top-3 right-3 w-5 h-5 cursor-pointer md:hidden not-dark:inverted" src="../images/user.png" alt="" />
-        </div>
+  {/* Logout Icon */}
+  {user && (
+    <img
+      className="w-5 h-5 cursor-pointer invert dark:invert-0"
+      src="./images/logoutIcon.png"
+      alt="logout"
+      onClick={() => {
+        localStorage.removeItem("token");
+        setUser(null);
+        setToken(null);
+        navigate("/login"); // redirect to login page
+      }}
+    />
+  )}
+</div>
+
 
 
 
