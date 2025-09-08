@@ -32,7 +32,17 @@ export const textMessageController = async (req, res) => {
     // Generate AI response
     const { choices } = await openai.chat.completions.create({
       model: "gemini-2.0-flash",
-      messages: [{ role: "user", content: prompt }],
+      // messages: [{ role: "user", content: prompt }],
+      messages: [
+    {
+      role: "system",
+      content: "You are Nova AI, a helpful, polite, and concise assistant. Always explain concepts clearly with examples when possible."
+    },
+    {
+      role: "user",
+      content: prompt
+    }
+  ],
     });
 
     const reply = {
