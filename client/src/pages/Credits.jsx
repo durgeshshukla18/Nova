@@ -1,13 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import Loading from './Loading'
+import { useAppContext } from '../context/AppContext';
 
 
 function Credits() {
 
   const [plans, setPlans] = useState([])
   const [loading, setLoading] = useState(true);
+  const {token, axios} = useAppContext();
 
   const fetchPlans = async() => {
+    // try {
+    //   const { data } = await axios.get('/api/credit/plan', {headers: {Authorization: token}});
+    //   if(data.success){
+    //     setPlans(data.plans);
+    //   }else{
+    //     toast.error(data.message || "Failed to fetch plans");
+    //   }
+    // } catch (error) {
+    //   toast.error(error.message);
+    // }
+    // setLoading(false);
+
+    // Dummy plans...
     setPlans([
       {id: 1, name: "Basic", credits: 100, price: 5, features: ["Access to basic features", "100 credits", "Email support"]},
       {id: 2, name: "Standard", credits: 250, price: 10, features: ["Access to standard features", "250 credits", "Priority email support", "Access to community"]},
