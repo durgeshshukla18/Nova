@@ -22,7 +22,7 @@ function Message({ message }) {
             </span>
           </div>
           <img
-            src="./images/yser.png"
+            src="./images/user.png"
             alt="user"
             className="w-8 rounded-full"
           />
@@ -31,7 +31,17 @@ function Message({ message }) {
         <div className="mb-4 p-3 rounded-lg max-w-xl bg-gray-200 dark:bg-gray-800 text-black dark:text-white self-start">
           <div className="flex flex-col gap-2 p-2 px-4 rounded-lg bg-gray-200 dark:bg-gray-800 text-black dark:text-white">
             <div className="text-sm dark:text-primary">
-              <Markdown>{message.content}</Markdown>
+              {/* ✅ Render image if AI generated one */}
+              {message.isImage ? (
+                <img
+                  src={message.content}
+                  alt="AI generated"
+                  className="rounded-lg max-w-xs h-auto cursor-pointer"
+                  onClick={() => window.open(message.content, "_blank")}
+                />
+              ) : (
+                <Markdown>{message.content}</Markdown>
+              )}
             </div>
             <span className="text-xs text-gray-400">
               {moment(message.timestamp).fromNow()}

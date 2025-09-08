@@ -46,8 +46,6 @@ function Chatbox() {
       setPrompt('');
       setLoading(false);
     }
-
-
     
   };
 
