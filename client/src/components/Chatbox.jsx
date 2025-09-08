@@ -72,7 +72,7 @@ function Chatbox() {
 
         <p className="text-center text-gray-500 dark:text-gray-400 mt-10">
           No messages yet. Start the conversation! </p>
-          <img className="w-1/2 h-1/2 mt-4" src="./images/NovaIconWbg.png" alt="Chat Illustration" />
+          <img className="w-1/2 h-1/2 mt-4 opacity-50" src="./images/NovaIconWbg.png" alt="Chat Illustration" />
         </div>
       )}
 
