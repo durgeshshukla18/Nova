@@ -2,6 +2,7 @@ import { useAppContext } from "../context/AppContext";
 import { useState, useEffect } from "react";
 import Message from "./Message";
 import React from "react";
+import toast from "react-hot-toast";
 
 
 
@@ -9,7 +10,7 @@ function Chatbox() {
 
   const containerRef = React.useRef(null);
 
-  const {selectedChat, theme} = useAppContext();
+  const {selectedChat, theme, user, axios, token, setUser, setSelectedChat} = useAppContext();
 
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -19,21 +20,35 @@ function Chatbox() {
   const [isPublished, setIsPublished] = useState(false);
 
   const onSubmit = async(e) => {
-    e.preventDefault();
-    if(prompt.trim() === "") return;
-    // send message to backend
-    setLoading(true);
-    // simulate response delay
-    setTimeout(() => {
-      const newMessage = {
-        role: "assistant",
-        content: "This is a simulated response to your prompt: " + prompt,
-        timestamp: new Date().toISOString()
-      };
-      setMessages([...messages, {role: "user", content: prompt, timestamp: new Date().toISOString()}, newMessage]);
-      setPrompt("");
+    try {
+      e.preventDefault();
+      if(prompt.trim() === "") return toast('Plese enter a valid prompt!');
+      if(!user) return toast('Login to start a chat!');
+      setLoading(true);
+      const promptCopy = prompt;
+      setPrompt('');
+      setMessages(prev => [...prev, {role: 'user', content: prompt, timestamp: Date.now(), isImage: false}]);
+
+      const {data} = await axios.post(`/api/message/${mode}`, {chatId: selectedChat._id, prompt, isPublished}, {headers: {Authorization: token}});
+
+      if (data.success) {
+        setMessages(data.updatedChat.messages); // full sync with DB
+        setSelectedChat(data.updatedChat);
+        setUser(prev => ({ ...prev, credits: data.updatedUser.credits }));
+      }
+      else{
+        toast.error(data.message);
+        setPrompt(promptCopy);
+      }
+    } catch (error){
+      toast.error(error.message);
+    }finally{
+      setPrompt('');
       setLoading(false);
-    }, 2000);
+    }
+
+
+    
   };
 
   useEffect(() => {
@@ -59,7 +74,7 @@ function Chatbox() {
 
         <p className="text-center text-gray-500 dark:text-gray-400 mt-10">
           No messages yet. Start the conversation! </p>
-          <img className="w-1/2 h-1/2 mt-4" src="./images/NovaIcon.png" alt="Chat Illustration" />
+          <img className="w-1/2 h-1/2 mt-4" src="./images/NovaIconWbg.png" alt="Chat Illustration" />
         </div>
       )}
 
@@ -85,9 +100,14 @@ function Chatbox() {
           <option className="dark:bg-purple-900" value="image">Image</option>
         </select>
         <input onChange={(e) => setPrompt(e.target.value)} value={prompt} type="text" placeholder="Type your prompt here" className="flex-1 w-full text-sm outline-none" required />
-        <button disabled={loading} onClick={onSubmit} type="submit" className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 text-white font-bold py-2 px-4 rounded ml-2 text-sm transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+        <button 
+          disabled={loading} 
+          type="submit" 
+          className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 text-white font-bold py-2 px-4 rounded ml-2 text-sm transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
           Send
         </button>
+
       </form>
 
     </div>

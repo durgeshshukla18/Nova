@@ -9,7 +9,7 @@ const chatSchema = new mongoose.Schema(
       {
         isImage: { type: Boolean, default: false },
         isPublished: { type: Boolean, default: false },
-        role: { type: String, enum: ["user", "admin"], required: true },
+        role: { type: String, enum: ["user", "assistant"], required: true },
         content: { type: String, required: true },
         timestamp: { type: Date, default: Date.now },
       },

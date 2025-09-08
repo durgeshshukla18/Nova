@@ -110,7 +110,7 @@ export const AppContextProvider = ( {children} ) => {
         fetchUserChats, 
         token, 
         setToken,
-        axios
+        axios,
     }
 
     return (
