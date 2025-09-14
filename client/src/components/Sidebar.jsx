@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 
-function Sidebar({}) {
+function Sidebar({ isMenuOpen, setIsMenuOpen }) {
   const { chats, setSelectedChat, theme, setTheme, user, createNewChat, axios, setChats, fetchUserChats, token, setToken} = useAppContext();
 
   const [search, setSearch] = useState("");
@@ -37,7 +37,7 @@ function Sidebar({}) {
   const navigate = useNavigate();
 
   return (
-    <div className="sidebar flex flex-col bg-white dark:bg-[#1f1e21] text-black dark:text-white border-r border-gray-300 dark:border-gray-700 backdrop-blur-xl transition-all duration-300 p-4 w-72 h-screen">
+    <div className={`sidebar flex flex-col bg-white dark:bg-[#1f1e21] text-black dark:text-white border-r border-gray-300 dark:border-gray-700 backdrop-blur-xl transition-all duration-300 p-4 w-72 h-screen ${!isMenuOpen && 'max-md:-translate-x-full'}`}>
       {/* logo */}
       <div className="flex justify-center mb-4">
       <img className="w-52" src="./images/NovaLogo.png" alt="" />
@@ -71,11 +71,11 @@ function Sidebar({}) {
               : chat.name.toLowerCase().includes(search.toLowerCase())
           )
           .map((chat) => (
-            <div
+            <div onClick={() => {navigate('/'); setSelectedChat(chat); setIsMenuOpen(false)}}
               key={chat.id}
               // onClick={() => setSelectedChat(chat)} 
               className="group relative p-3 bg-gray-100 dark:bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300"
-              onClick={() => setSelectedChat(chat)}
+              // onClick={() => setSelectedChat(chat)}
             >
               <div>
                 <p className="font-semibold truncate">
@@ -115,7 +115,7 @@ function Sidebar({}) {
 
       {/* Credit purchase option  */}
       <div
-        onClick={() => navigate("/credits")}
+        onClick={() => {navigate("/credits"); setIsMenuOpen(false)}}
         className="mt-4 w-full p-3 bg-gradient-to-r from-blue-400 to-purple-500 hover:from-purple-600 hover:to-blue-600 text-white font-bold rounded-lg cursor-pointer text-center transition-all duration-300 shadow-md"
       >
         {/* <img src='' alt="" /> */}
@@ -163,7 +163,7 @@ function Sidebar({}) {
         )}
       </div>
 
-
+        <img onClick={() => setIsMenuOpen(false)} src="./public/images/close.png" className="absolute top-3 right-3 w-5 h-5 cursor-pointer md:hidden not-dark:invert" alt=""/>
 
 
 
