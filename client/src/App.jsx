@@ -14,7 +14,7 @@ function App() {
 
   const {user, loadingUser} = useAppContext();
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { pathname} = useLocation();
 
@@ -26,14 +26,14 @@ function App() {
   return (
     <>
     <Toaster />
-    {isMenuOpen && <img src="./images/close.png" className="absolute top-5 right-5 w-8 h-8 cursor-pointer md:hidden invert dark:invert-0" onClick={() => setIsMenuOpen(true)} />}
+    {/* {isMenuOpen && <img src="./images/close.png" className="absolute top-5 right-5 w-8 h-8 cursor-pointer md:hidden invert dark:invert-0" onClick={() => setIsMenuOpen(true)} />} */}
       
 
       {user ? (
         <div className="dark:bg-gradient-to-b from-[#242124] to-[#000000] dark:text-white">
         <div className="flex h-screen w-screen">
-          <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-          {/* <Sidebar /> */}
+          {/* <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} /> */}
+          <Sidebar />
           <Routes>
             <Route path="/" element={<Chatbox />} />
             <Route path="/credits" element={<Credits />} />
