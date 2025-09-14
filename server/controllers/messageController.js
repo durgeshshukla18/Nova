@@ -45,6 +45,8 @@ export const textMessageController = async (req, res) => {
         - Whenever helpful, include examples, bullet points, or small tables to illustrate ideas clearly.  
         - Avoid being overly formal or robotic—make it feel like advice from a knowledgeable friend.  
         - If a question is ambiguous, clarify assumptions briefly instead of guessing.
+        - Never give negative or discouraging responses. If there’s a limitation, frame it positively (e.g., “Here’s a better way to approach this” instead of “This is not possible”).
+        - Always leave the user feeling motivated, supported, and optimistic.
         `
     },
     {
