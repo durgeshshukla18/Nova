@@ -24,11 +24,16 @@ function Message({ message }) {
           <img
             src="./images/user.png"
             alt="user"
-            className="w-8 rounded-full"
+            className="w-8 rounded-full ml-2"
           />
         </div>
       ) : (
         <div className="flex items-start justify-start mb-4">
+          <img
+            src="./images/chatbot.png"
+            alt="chatbot"
+            className="w-8 h-8 rounded-full mr-2"
+          />
           <div className="max-w-xs sm:max-w-md bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-2xl shadow-md rounded-bl-none">
             <div className="text-sm dark:text-primary">
               {/* Render image if AI generated one */}
