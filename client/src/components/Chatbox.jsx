@@ -67,6 +67,7 @@ function Chatbox() {
       
       {/* chat messages  */}
       <div ref={containerRef} className="flex-1 overflow-y-auto mb-4 space-y-3 scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-700">
+        <div className="w-full max-w-2xl space-y-4">
       {messages.length === 0 && (
         <div className="flex flex-col items-center justify-center h-full opacity-70">
 
@@ -88,7 +89,7 @@ function Chatbox() {
           <div className="w-2 h-2 rounded-full bg-gray-500 dark:bg-white animate-bounce [animation-delay:0.15s]"></div>
         </div>
       )}
-       
+       </div>
       </div>
 
       {/* input box  */}
