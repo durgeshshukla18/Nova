@@ -66,16 +66,20 @@ function Chatbox() {
     <div className="chatbox flex-1 flex flex-col justify-between bg-white dark:bg-gray-900 text-black dark:text-white p-4">
       
       {/* chat messages  */}
-      <div ref={containerRef} className="flex-1 overflow-y-auto mb-4 space-y-3 scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-700">
+      <div ref={containerRef} className="flex-1 overflow-y-auto mb-4 flex justify-center">
         <div className="w-full max-w-2xl space-y-4">
-      {messages.length === 0 && (
-        <div className="flex flex-col items-center justify-center h-full opacity-70">
-
-        <p className="text-center text-gray-500 dark:text-gray-400">
-          No messages yet. Start the conversation! </p>
-          <img className="w-32 h-32 mb-4 opacity-50" src="./images/NovaIconWbg.png" alt="Chat Illustration" />
-        </div>
-      )}
+          {messages.length === 0 && (
+          <div className="flex flex-col items-center justify-center h-full opacity-70">
+            <img
+              className="w-32 h-32 mb-4"
+              src="./images/NovaIconWbg.png"
+              alt="Chat Illustration"
+            />
+            <p className="text-center text-gray-500 dark:text-gray-400">
+              No messages yet. Start the conversation!
+            </p>
+          </div>
+        )}
 
       {messages.map((message, index) => (
         <Message key={index} message={message} />
