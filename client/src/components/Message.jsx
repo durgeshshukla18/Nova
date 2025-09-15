@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import moment from "moment/moment";
 import Markdown from "react-markdown";
 import prism from "prismjs";
+import rehypePrism from "rehype-prism-plus"; 
+import "prismjs/themes/prism-tomorrow.css";
 
 
 function Message({ message }) {
@@ -45,7 +47,7 @@ function Message({ message }) {
                   onClick={() => window.open(message.content, "_blank")}
                 />
               ) : (
-                <Markdown>{message.content}</Markdown>
+                <Markdown rehypePlugins={[rehypePrism]}>{message.content}</Markdown>
               )}
             </div>
             <span className="text-xs text-gray-400 dark:text-gray-500 block mt-1">
