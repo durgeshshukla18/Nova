@@ -3,7 +3,8 @@ import moment from "moment/moment";
 import Markdown from "react-markdown";
 import prism from "prismjs";
 import rehypePrism from "rehype-prism-plus"; 
-import "prismjs/themes/prism-tomorrow.css";
+import "prismjs/themes/prism-okaidia.css";
+
 
 
 function Message({ message }) {
